@@ -8,8 +8,6 @@ jobs:
 - job: Build Container and Helm Chart
   pool:
     vmImage: ubuntu-latest
-  pool:
-    vmImage: ${{ parameters.vmImage }}
   steps:
   - template: utility/gitversion.yaml      
   - template: build/container.yaml
