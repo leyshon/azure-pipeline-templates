@@ -9,6 +9,7 @@ steps:
   inputs:
     TargetType: 'inline'
     Script: |
+      Set-PSDebug -Trace 1
       $tag = "${{ parameters.tag }}"
       $newTag = $tag.Replace('+','-')
       docker login ${{ parameters.containerRegistry }} -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET)
