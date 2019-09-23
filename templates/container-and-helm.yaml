@@ -6,8 +6,8 @@ parameters:
   dockerAdditionalArgs: ''
 jobs:
 - job: Build Container and Helm Chart
-  variables:
-  - group: ${{ parameters.azureAuthVariableGroup }}
+  pool:
+    vmImage: ubuntu-latest
   pool:
     vmImage: ${{ parameters.vmImage }}
   steps:
