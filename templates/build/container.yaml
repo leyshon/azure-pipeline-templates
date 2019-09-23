@@ -12,6 +12,6 @@ steps:
       $tag = "${{ parameters.tag }}"
       $newTag = $tag.Replace('+','-')
       docker login ${{ parameters.containerRegistry }} -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET)
-      docker build -f ${{ parameters.dockerfile }} -t ${{parameters.containerRegistry}}\$newTag ${{ parameters.context }} ${{ parameters.additionalArgs }}
+      docker build -f ${{ parameters.dockerfile }} -t ${{parameters.containerRegistry}}/$newTag ${{ parameters.context }} ${{ parameters.additionalArgs }}
       docker push ${{ parameters.tag }}
     pwsh: true
