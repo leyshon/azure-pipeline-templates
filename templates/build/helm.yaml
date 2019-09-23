@@ -8,7 +8,7 @@ steps:
 - task: PowerShell@2
   inputs:
     TargetType: 'inline'
-    Script: 
+    Script: |
       helm package --version ${{ parameters.version }} ${{ parameters.chartPath }}
       az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant f4f3e0ab-4028-411c-bc8a-79b8a4fbe674
       az acr helm repo add -n ${{ parameters.containerRegistry}}
