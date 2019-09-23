@@ -5,7 +5,7 @@ parameters:
   dockerTag: ''
   dockerAdditionalArgs: ''
 jobs:
-- job: Build Container and Helm Chart - ${{ parameters.dockerFile }}
+- job: Build_Container_and_Helm_Chart_${{ parameters.dockerFile }}
   pool:
     vmImage: ubuntu-latest
   steps:
