@@ -5,12 +5,15 @@ parameters:
   dockerTag: ''
   dockerAdditionalArgs: ''
   jobName: ''
+  gitVersionMode: 
 jobs:
 - job: Build_Container_and_Helm_Chart_${{ parameters.jobName }}
   pool:
     vmImage: ubuntu-latest
   steps:
-  - template: utility/gitversion.yaml      
+  - template: utility/gitversion.yaml
+    parameters:
+      config: ${{ parameters.gitVersionMode }}
   - template: build/container.yaml
     parameters:
       containerRegistry: ${{ parameters.containerRegistry }}
