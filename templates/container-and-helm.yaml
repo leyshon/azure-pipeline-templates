@@ -1,0 +1,22 @@
+parameters:
+  containerRegistry: ''
+  dockerfile: ''
+  dockerContext: ''
+  dockerTag: ''
+  dockerAdditionalArgs: ''
+jobs:
+- job: Build Container and Helm Chart
+  variables:
+  - group: ${{ parameters.azureAuthVariableGroup }}
+  pool:
+    vmImage: ${{ parameters.vmImage }}
+  steps:
+  - template: utility/gitversion.yaml      
+  - template: build/container.yaml
+    parameters:
+      containerRegistry: ${{ parameters.containerRegistry }}
+      dockerfile: ${{ parameters.dockerfile }}
+      context: ${{ parameters.dockerContext }}
+      tag: ${{ parameters.dockerTag }}
+      additionalArgs: ${{ parameters.dockerAdditionalArgs }}
+  - template: build/helm.yaml

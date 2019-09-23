@@ -1,0 +1,55 @@
+trigger:
+  batch: true
+  branches:
+    include:
+    - feature/*
+    - develop
+    - master
+variables:
+  dockerfile: 
+  dockerContext:
+  dockerTag:
+stages:
+- stage: Build Feature/Hotfix
+  jobs:
+  condition: and(ne(variables['Build.SourceBranch'], 'refs/heads/develop'), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
+  - job: Download Templates
+    steps:
+    - script: Something to download the templates
+  - template: container-and-helm.yaml
+    parameters:
+      containerRegistry: ''
+      dockerfile: $(dockerfile)
+      dockerContext: $(dockerContext)
+      dockerTag: $(dockerTag)
+      dockerAdditionalArgs: ''
+      azureAuthVariableGroup: ''
+- stage: Build Develop
+  jobs:
+  condition: and(eq(variables['build.sourceBranch'], 'refs/heads/develop'))
+  - job: Download Templates
+    steps:
+    - script: Something to download the templates
+  - template: container-and-helm.yaml
+    parameters:
+      containerRegistry: ''
+      dockerfile: ''
+      dockerContext: ''
+      dockerTag: ''
+      dockerAdditionalArgs: ''
+      azureAuthVariableGroup: ''
+- stage: Build Master
+  jobs:
+  condition: and(eq(variables['build.sourceBranch'], 'refs/heads/master'))
+  - job: Download Templates
+    steps:
+    - script: Something to download the templates
+  - template: container-and-helm.yaml
+    parameters:
+      containerRegistry: ''
+      dockerfile: ''
+      dockerContext: ''
+      dockerTag: ''
+      dockerAdditionalArgs: ''
+      azureAuthVariableGroup: ''
+  

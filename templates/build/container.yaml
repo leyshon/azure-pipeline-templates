@@ -1,0 +1,15 @@
+parameters:
+  containerRegistry: ''
+  dockerfile: ''
+  context: ''
+  tag: ''
+  additionalArgs: ''
+steps:  
+- task: PowerShell@2
+  inputs:
+    TargetType: 'inline'
+    Script: 
+      docker login ${{ parameters.containerRegistry }} -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET)
+      docker build -f ${{ parameters.dockerfile }} -t ${{parameters.containerRegistry}}\${{ parameters.tag }} ${{ parameters.context }} ${{ parameters.additionalArgs }}
+      docker push ${{ parameters.tag }}
+    pwsh: true
