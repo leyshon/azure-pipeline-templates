@@ -6,6 +6,7 @@ parameters:
   dockerAdditionalArgs: ''
   jobName: ''
   gitVersionConfig: 
+  helmChartPath:
 jobs:
 - job: Build_Container_and_Helm_Chart_${{ parameters.jobName }}
   pool:
@@ -22,3 +23,6 @@ jobs:
       tag: ${{ parameters.dockerTag }}
       additionalArgs: ${{ parameters.dockerAdditionalArgs }}
   - template: build/helm.yaml
+    parameters:
+      version:
+      chartPath: ${{ parameters.helmChartPath }}
