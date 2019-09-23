@@ -21,7 +21,7 @@ steps:
   inputs:
     TargetType: 'inline'
     Script: 
-      Set-Content GitVersion.yml -Value ${{ parameters.config }}
+      Set-Content -Path GitVersion.yml -Value ${{ parameters.config }}
       Get-Content GitVersion.yml
       dotnet-gitversion /output buildserver /nofetch
     pwsh: true
