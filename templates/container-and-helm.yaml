@@ -4,8 +4,9 @@ parameters:
   dockerContext: ''
   dockerTag: ''
   dockerAdditionalArgs: ''
+  jobName: ''
 jobs:
-- job: Build_Container_and_Helm_Chart_${{ parameters.dockerFile }}
+- job: Build_Container_and_Helm_Chart_${{ parameters.jobName }}
   pool:
     vmImage: ubuntu-latest
   steps:
