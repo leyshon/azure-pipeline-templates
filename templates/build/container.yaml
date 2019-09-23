@@ -9,7 +9,7 @@ steps:
   inputs:
     TargetType: 'inline'
     Script: |
-      $tag = ${{ parameters.tag }}
+      $tag = "${{ parameters.tag }}"
       $newTag = $tag.Replace('+','-')
       docker login ${{ parameters.containerRegistry }} -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET)
       docker build -f ${{ parameters.dockerfile }} -t ${{parameters.containerRegistry}}\$newTag ${{ parameters.context }} ${{ parameters.additionalArgs }}
