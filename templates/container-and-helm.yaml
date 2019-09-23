@@ -5,7 +5,7 @@ parameters:
   dockerTag: ''
   dockerAdditionalArgs: ''
   jobName: ''
-  gitVersionMode: 
+  gitVersionConfig: 
 jobs:
 - job: Build_Container_and_Helm_Chart_${{ parameters.jobName }}
   pool:
@@ -13,7 +13,7 @@ jobs:
   steps:
   - template: utility/gitversion.yaml
     parameters:
-      config: ${{ parameters.gitVersionMode }}
+      config: ${{ parameters.gitVersionConfig }}
   - template: build/container.yaml
     parameters:
       containerRegistry: ${{ parameters.containerRegistry }}
