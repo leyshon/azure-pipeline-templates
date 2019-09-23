@@ -4,8 +4,6 @@ parameters:
 steps:
 # Installing dotnetcore sdk is a workaround to allow global tools to be used.
 # See https://github.com/microsoft/azure-pipelines-tasks/issues/8429
-variables: 
-- group: GitVersion
 - task: DotNetCoreInstaller@0
   displayName: Install .NET Core SDK
   name: install_dotnetcore_sdk
