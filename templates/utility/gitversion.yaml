@@ -21,6 +21,7 @@ steps:
   inputs:
     TargetType: 'inline'
     Script: |
+      Set-PSDebug -Trace 1
       Set-Content -Path GitVersion.yml -Value ${{ parameters.config }}
       Get-Content GitVersion.yml
       dotnet-gitversion /output buildserver /nofetch
