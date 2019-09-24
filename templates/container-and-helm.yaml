@@ -26,3 +26,4 @@ jobs:
     parameters:
       version: $(GitVersion.FullSemVer)
       chartPath: ${{ parameters.helmChartPath }}
+      containerRegistry: ${{ parameters.containerRegistry }}

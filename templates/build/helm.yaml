@@ -1,6 +1,7 @@
 parameters:
   version: ''
   chartPath: ''
+  containerRegistry: 
 steps:  
 - task: PowerShell@2
   displayName: Package Helm Chart
