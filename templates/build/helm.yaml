@@ -11,7 +11,7 @@ steps:
       $version = "${{ parameters.version }}"
       $version = $version.Replace('+','-')
       helm package --version $version ${{ parameters.chartPath }}
-      az login --service-principal -u $env:ARM_CLIENT_ID -p $env:ARM_CLIENT_SECRET --tenant f4f3e0ab-4028-411c-bc8a-79b8a4fbe674
+      az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant f4f3e0ab-4028-411c-bc8a-79b8a4fbe674
       az acr helm repo add -n ${{ parameters.containerRegistry}}
       az acr helm push -n ${{ parameters.containerRegistry}} "${{ parameters.chartName}}-${{ parameters.version }}.tgz" --force
     pwsh: true
