@@ -1,0 +1,15 @@
+parameters:
+  terraformRoot: '' 
+  backendConfigFile: ''
+  variablesFile: ''
+  extraArgs: ''
+steps:  
+- task: PowerShell@2
+  inputs:
+    TargetType: 'inline'
+    Script: |
+      Set-PSDebug -Trace 1
+      Set-Location ${{ parameters.terraformRoot }}
+      terraform init -backend-config=${{ parameters.backendConfigFile }}
+      terraform apply -auto-approve -input=false -var-file=${{ parameters.variablesFile }} ${{ parameters.extraArgs }}
+    pwsh: true
