@@ -3,11 +3,12 @@ parameters:
   chartPath: ''
 steps:  
 - task: PowerShell@2
+  displayName: Package Helm Chart
   inputs:
     TargetType: 'inline'
     Script: |
       Set-PSDebug -Trace 1
-      $version = ${{ parameters.version }}
+      $version = "${{ parameters.version }}"
       $version = $version.Replace('+','-')
       helm package --version $version ${{ parameters.chartPath }}
       az login --service-principal -u $env:ARM_CLIENT_ID -p $env:ARM_CLIENT_SECRET --tenant f4f3e0ab-4028-411c-bc8a-79b8a4fbe674

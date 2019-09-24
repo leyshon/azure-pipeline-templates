@@ -6,6 +6,7 @@ parameters:
   additionalArgs: ''
 steps:  
 - task: PowerShell@2
+  displayName: Build docker container
   inputs:
     TargetType: 'inline'
     Script: |
