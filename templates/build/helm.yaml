@@ -18,6 +18,6 @@ steps:
       az acr helm repo add -n ${{ parameters.helmRepo}}
       az acr helm push -n ${{ parameters.helmRepo}} "$chartName-$version.tgz" --force
     pwsh: true
-    env:
-      version: ${{ parameters.version }}
-      chartName: ${{ parameters.chartName }}
+  env:
+    version: ${{ parameters.version }}
+    chartName: ${{ parameters.chartName }}
