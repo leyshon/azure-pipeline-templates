@@ -10,8 +10,8 @@ steps:
     Script: |
       Set-PSDebug -Trace 1
       helm init --client-only
-      $version = "${{ parameters.version }}"
-      $chartName = "${{ parameters.chartName }}"
+      $version = ${{ parameters.version }}
+      $chartName = ${{ parameters.chartName }}
       $version = $version.Replace('+','-')
       helm package --version $version ${{ parameters.chartPath }}
       az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant f4f3e0ab-4028-411c-bc8a-79b8a4fbe674
