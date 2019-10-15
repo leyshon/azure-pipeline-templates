@@ -10,14 +10,12 @@ steps:
     Script: |
       Set-PSDebug -Trace 1
       helm init --client-only
-      $version = "$env:version"
-      $chartName = "$env:chartName"
+      $version = "${{ parameters.version }}"
       $version = $version.Replace('+','-')
+      $chartPath = "${{ parameters.chartPath }}"
+      $chartName = [regex]::Match($chartPath, '([^/]+$)').value
       helm package --version $version ${{ parameters.chartPath }}
       az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant f4f3e0ab-4028-411c-bc8a-79b8a4fbe674
       az acr helm repo add -n ${{ parameters.helmRepo}}
       az acr helm push -n ${{ parameters.helmRepo}} "$chartName-$version.tgz" --force
     pwsh: true
-  env:
-    version: ${{ parameters.version }}
-    chartName: ${{ parameters.chartName }}
