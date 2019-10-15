@@ -1,0 +1,37 @@
+parameters:
+  containerRegistry:
+  k8sCluster:
+  helmReleaseName:
+  acrName:
+  chartName:
+  version:
+  namespace:
+  setArgs: ""
+steps:  
+- task: PowerShell@2
+  displayName: Package Helm Chart
+  inputs:
+    TargetType: 'inline'
+    Script: |
+      Set-PSDebug -Trace 1
+      $version = "${{ parameters.version }}"
+      $version = $version.Replace('+','-')
+      # Stuff
+
+      # Get the credentials for the aks cluster
+      az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant f4f3e0ab-4028-411c-bc8a-79b8a4fbe674
+      az aks get-credentials -g "${{ parameters.k8sCluster }}-RG" -n ${{ parameters.k8sCluster }} --admin
+
+      # Make sure we have our helm repo set up
+      az acr helm repo add -n ${{ parameters.containerRegistry}}
+      helm repo update
+
+      # Install if missing else upgrade
+      helm upgrade "$helmReleaseName" ${{ parameters.acrName }}/${{ parameters.chartName }} \
+                      --version ${{ parameters.version }}" \
+                      --install \
+                      --tiller-namespace ${{ parameters.namespace }} \
+                      --namespace ${{ parameters.namespace }} \
+                      --wait \
+                      ${{ parameters.setArgs }}
+    pwsh: true
