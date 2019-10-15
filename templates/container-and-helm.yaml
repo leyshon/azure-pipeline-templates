@@ -7,6 +7,7 @@ parameters:
   jobName: ''
   gitVersionConfig: 
   helmChartPath:
+  helmRepo:
 jobs:
 - job: Build_Container_and_Helm_Chart_${{ parameters.jobName }}
   pool:
@@ -26,4 +27,4 @@ jobs:
     parameters:
       version: $(GitVersion.FullSemVer)
       chartPath: ${{ parameters.helmChartPath }}
-      containerRegistry: ${{ parameters.containerRegistry }}
+      helmRepo: ${{ parameters.helmRepo }}
