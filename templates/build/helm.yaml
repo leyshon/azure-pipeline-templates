@@ -9,6 +9,7 @@ steps:
     TargetType: 'inline'
     Script: |
       Set-PSDebug -Trace 1
+      helm init --client-only
       $version = "${{ parameters.version }}"
       $version = $version.Replace('+','-')
       helm package --version $version ${{ parameters.chartPath }}
