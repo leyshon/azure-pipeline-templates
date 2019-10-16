@@ -9,7 +9,7 @@ parameters:
   setArgs: ""
 steps:  
 - task: PowerShell@2
-  displayName: Package Helm Chart
+  displayName: Deploy Helm Chart
   inputs:
     TargetType: 'inline'
     Script: |
@@ -32,6 +32,6 @@ steps:
                       --install `
                       --tiller-namespace ${{ parameters.namespace }} `
                       --namespace ${{ parameters.namespace }} `
-                      --wait `s
+                      --wait `
                       ${{ parameters.setArgs }}
     pwsh: true
