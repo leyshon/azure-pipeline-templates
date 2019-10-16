@@ -1,8 +1,7 @@
 parameters:
-  containerRegistry:
   k8sCluster:
   helmReleaseName:
-  acrName:
+  helmChartRepo:
   chartName:
   version:
   namespace:
@@ -23,11 +22,11 @@ steps:
       az aks get-credentials -g "${{ parameters.k8sCluster }}-RG" -n ${{ parameters.k8sCluster }} --admin
 
       # Make sure we have our helm repo set up
-      az acr helm repo add -n ${{ parameters.containerRegistry}}
+      az acr helm repo add -n ${{ parameters.helmChartRepo}}
       helm repo update
 
       # Install if missing else upgrade
-      helm upgrade "$helmReleaseName" ${{ parameters.acrName }}/${{ parameters.chartName }} `
+      helm upgrade "$helmReleaseName" ${{ parameters.helmChartRepo }}/${{ parameters.chartName }} `
                       --version $version `
                       --install `
                       --tiller-namespace ${{ parameters.namespace }} `
