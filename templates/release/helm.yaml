@@ -27,11 +27,11 @@ steps:
       helm repo update
 
       # Install if missing else upgrade
-      helm upgrade "$helmReleaseName" ${{ parameters.acrName }}/${{ parameters.chartName }} \
-                      --version ${{ parameters.version }}" \
-                      --install \
-                      --tiller-namespace ${{ parameters.namespace }} \
-                      --namespace ${{ parameters.namespace }} \
-                      --wait \
+      helm upgrade "$helmReleaseName" ${{ parameters.acrName }}/${{ parameters.chartName }} `
+                      --version $version `
+                      --install `
+                      --tiller-namespace ${{ parameters.namespace }} `
+                      --namespace ${{ parameters.namespace }} `
+                      --wait `s
                       ${{ parameters.setArgs }}
     pwsh: true
