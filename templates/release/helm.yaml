@@ -15,7 +15,8 @@ steps:
       Set-PSDebug -Trace 1
       $version = "${{ parameters.version }}"
       $version = $version.Replace('+','-')
-      # Stuff
+      
+      helm init --client-only
 
       # Get the credentials for the aks cluster
       az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant f4f3e0ab-4028-411c-bc8a-79b8a4fbe674
