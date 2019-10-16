@@ -27,7 +27,7 @@ steps:
       helm repo update
 
       # Install if missing else upgrade
-      helm upgrade "$helmReleaseName" ${{ parameters.helmChartRepo }}/${{ parameters.chartName }} `
+      helm upgrade ${{ parameters.helmReleaseName }} ${{ parameters.helmChartRepo }}/${{ parameters.chartName }} `
                       --version $version `
                       --install `
                       --tiller-namespace ${{ parameters.namespace }} `
