@@ -4,27 +4,22 @@ parameters:
   dockerContext: ''
   dockerTag: ''
   dockerAdditionalArgs: ''
-  jobName: ''
   gitVersionConfig: 
   helmChartPath:
   helmRepo:
-jobs:
-- job: Build_Container_and_Helm_Chart_${{ parameters.jobName }}
-  pool:
-    vmImage: ubuntu-latest
-  steps:
-  - template: utility/gitversion.yaml
-    parameters:
-      config: ${{ parameters.gitVersionConfig }}
-  - template: build/container.yaml
-    parameters:
-      containerRegistry: ${{ parameters.containerRegistry }}
-      dockerfile: ${{ parameters.dockerfile }}
-      context: ${{ parameters.dockerContext }}
-      tag: ${{ parameters.dockerTag }}
-      additionalArgs: ${{ parameters.dockerAdditionalArgs }}
-  - template: build/helm.yaml
-    parameters:
-      version: $(GitVersion.FullSemVer)
-      chartPath: ${{ parameters.helmChartPath }}
-      helmRepo: ${{ parameters.helmRepo }}
+steps:
+- template: utility/gitversion.yaml
+  parameters:
+    config: ${{ parameters.gitVersionConfig }}
+- template: build/container.yaml
+  parameters:
+    containerRegistry: ${{ parameters.containerRegistry }}
+    dockerfile: ${{ parameters.dockerfile }}
+    context: ${{ parameters.dockerContext }}
+    tag: ${{ parameters.dockerTag }}
+    additionalArgs: ${{ parameters.dockerAdditionalArgs }}
+- template: build/helm.yaml
+  parameters:
+    version: $(GitVersion.FullSemVer)
+    chartPath: ${{ parameters.helmChartPath }}
+    helmRepo: ${{ parameters.helmRepo }}
