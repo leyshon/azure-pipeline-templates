@@ -10,6 +10,8 @@ steps:
     Script: |
       Set-PSDebug -Trace 1
       Set-Location ${{ parameters.terraformRoot }}
+      pwd
+      Get-ChildItem
       terraform init -backend-config=${{ parameters.backendConfigFile }}
       terraform apply -auto-approve -input=false -var-file=${{ parameters.variablesFile }} ${{ parameters.extraArgs }}
     pwsh: true
