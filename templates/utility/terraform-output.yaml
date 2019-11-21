@@ -1,0 +1,18 @@
+parameters:
+  terraformRoot: '' 
+steps:  
+- task: PowerShell@2
+  name: Terraform_Output
+  inputs:
+    TargetType: 'inline'
+    Script: |
+      Set-PSDebug -Trace 1
+      Set-Location ${{ parameters.terraformRoot }}
+      $outputs = terraform output -json | ConvertFrom-Json -AsHashTable
+      foreach ($o in $outputs.keys) {
+        Write-Output "Setting variable $o"
+        Write-Output "##vso[task.setvariable variable=$o;isOutput=true]$($outputs.$o.value)"
+      }
+    pwsh: true
+  env:
+    ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
