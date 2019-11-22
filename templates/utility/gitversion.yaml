@@ -34,5 +34,5 @@ steps:
       Set-PSDebug -Trace 1
       $buildNumber = $($env:BUILD_BUILDNUMBER).replace('+','-')
       Write-Output $buildNumber
-      Write-Output "##vso[build.updatebuildnumber]$($buildNumber"
+      Write-Output "##vso[build.updatebuildnumber]$buildNumber"
     pwsh: true
