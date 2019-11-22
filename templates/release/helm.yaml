@@ -12,7 +12,7 @@ steps:
   inputs:
     TargetType: 'inline'
     Script: |
-      Set-PSDebug -Trace 2
+      Set-PSDebug -Trace 1
       $version = "${{ parameters.version }}"
       $version = $version.Replace('+','-')
       
@@ -30,5 +30,11 @@ steps:
       helm repo update
 
       # Install if missing else upgrade
-      helm upgrade ${{ parameters.helmReleaseName }} ${{ parameters.helmChartRepo }}/${{ parameters.chartName }} --version=$version --install --tiller-namespace=${{ parameters.namespace }} --namespace=${{ parameters.namespace }} --wait ${{ parameters.setArgs }}
+      helm upgrade ${{ parameters.helmReleaseName }} ${{ parameters.helmChartRepo }}/${{ parameters.chartName }} `
+                      --version $version `
+                      --install `
+                      --tiller-namespace ${{ parameters.namespace }} `
+                      --namespace ${{ parameters.namespace }} `
+                      --wait `
+                      ${{ parameters.setArgs }}
     pwsh: true
