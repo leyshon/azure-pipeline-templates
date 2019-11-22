@@ -25,6 +25,15 @@ steps:
       Set-Content -Path GitVersion.yml -Value ${{ parameters.config }}
       Get-Content GitVersion.yml
       dotnet-gitversion /output buildserver /nofetch
+    pwsh: true
+- task: PowerShell@2
+  displayName: 'Replace +'
+  inputs:
+    TargetType: 'inline'
+    Script: |
+      Set-PSDebug -Trace 1
+      Write-Output $env:BUILD_BUILDNUMBER
       $buildNumber = ($env:BUILD_BUILDNUMBER).replace('+','-')
+      Write-Output $buildNumber
       Write-Output "##vso[build.updatebuildnumber]$buildNumber"
     pwsh: true
