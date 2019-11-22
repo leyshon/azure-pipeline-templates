@@ -25,4 +25,6 @@ steps:
       Set-Content -Path GitVersion.yml -Value ${{ parameters.config }}
       Get-Content GitVersion.yml
       dotnet-gitversion /output buildserver /nofetch
+      $buildNumber = ($env:BUILD_BUILDNUMBER).replace('+','-')
+      Write-Output "##vso[build.updatebuildnumber]$buildNumber"
     pwsh: true
