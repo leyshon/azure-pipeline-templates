@@ -4,6 +4,7 @@ parameters:
   variablesFile: ''
   extraArgs: ''
   location: ''
+  initExtraArgs: ''
 steps:  
 - task: PowerShell@2
   name: Terraform
@@ -20,7 +21,7 @@ steps:
       az group create -l ${{ parameters.location }} -n $storageRg
       az storage account create -n $storageAccount -g $storageRg -l ${{ parameters.location }} --sku Standard_RAGRS
       az storage container create -n $container --account-name $storageAccount
-      terraform init --backend-config=${{ parameters.backendConfigFile }}
+      terraform init --backend-config=${{ parameters.backendConfigFile }} ${{ parameters.initExtraArgs }}
       terraform apply --auto-approve --input=false --var-file=${{ parameters.variablesFile }} ${{ parameters.extraArgs }}
     pwsh: true
   env:
