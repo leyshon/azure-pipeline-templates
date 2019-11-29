@@ -1,0 +1,28 @@
+parameters:
+  terraformRoot: '' 
+  backendConfigFile: ''
+  variablesFile: ''
+  extraArgs: ''
+  location: ''
+  initExtraArgs: ''
+steps:  
+- task: PowerShell@2
+  name: Terraform
+  displayName: Terraform
+  inputs:
+    TargetType: 'inline'
+    Script: |
+      Set-PSDebug -Trace 1
+      Set-Location ${{ parameters.terraformRoot }}
+      $storageAccount = [regex]::matches($(Get-Content ${{ parameters.backendConfigFile }}), '(?<=storage_account_name = ")(((?!").)*)').captures.groups[0].value
+      $storageRg= [regex]::matches($(Get-Content ${{ parameters.backendConfigFile }}), '(?<=resource_group_name = ")(((?!").)*)').captures.groups[0].value
+      $container= [regex]::matches($(Get-Content ${{ parameters.backendConfigFile }}), '(?<=container_name = ")(((?!").)*)').captures.groups[0].value
+      az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant f4f3e0ab-4028-411c-bc8a-79b8a4fbe674
+      az group create -l ${{ parameters.location }} -n $storageRg
+      az storage account create -n $storageAccount -g $storageRg -l ${{ parameters.location }} --sku Standard_RAGRS
+      az storage container create -n $container --account-name $storageAccount
+      terraform init --backend-config=${{ parameters.backendConfigFile }} ${{ parameters.initExtraArgs }}
+      terraform plan --input=false --var-file=${{ parameters.variablesFile }} ${{ parameters.extraArgs }} --out ${{ parameters.terraformRoot }}/plan.out
+    pwsh: true
+  env:
+    ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
