@@ -15,6 +15,7 @@ steps:
     Script: |
       Set-PSDebug -Trace 1
       if (-not [string]::IsNullOrEmpty("${{ parameters.plan }}")) {
+        Set-Location ${{ parameters.terraformRoot }
         terraform apply ${{ parameters.plan }}
       }
       else {
