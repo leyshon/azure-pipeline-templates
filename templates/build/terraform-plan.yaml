@@ -5,6 +5,7 @@ parameters:
   extraArgs: ''
   location: ''
   initExtraArgs: ''
+  planOutFile: ''
 steps:  
 - task: PowerShell@2
   name: Terraform
@@ -22,7 +23,7 @@ steps:
       az storage account create -n $storageAccount -g $storageRg -l ${{ parameters.location }} --sku Standard_RAGRS
       az storage container create -n $container --account-name $storageAccount
       terraform init --backend-config=${{ parameters.backendConfigFile }} ${{ parameters.initExtraArgs }}
-      terraform plan --input=false --var-file=${{ parameters.variablesFile }} ${{ parameters.extraArgs }} --out ${{ parameters.terraformRoot }}/tfplan
+      terraform plan --input=false --var-file=${{ parameters.variablesFile }} ${{ parameters.extraArgs }} --out ${{ parameters.planOutFile }}
     pwsh: true
   env:
     ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
