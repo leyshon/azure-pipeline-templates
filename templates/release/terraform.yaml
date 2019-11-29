@@ -22,7 +22,7 @@ steps:
       az group create -l ${{ parameters.location }} -n $storageRg
       az storage account create -n $storageAccount -g $storageRg -l ${{ parameters.location }} --sku Standard_RAGRS
       az storage container create -n $container --account-name $storageAccount
-      if (-not [string]::IsNullOrEmpty(${{ parameters.plan }})) {
+      if (-not [string]::IsNullOrEmpty("${{ parameters.plan }}")) {
         terraform apply ${{ parameters.plan }}
       }
       else {
