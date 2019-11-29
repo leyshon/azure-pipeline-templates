@@ -22,7 +22,7 @@ steps:
       az storage account create -n $storageAccount -g $storageRg -l ${{ parameters.location }} --sku Standard_RAGRS
       az storage container create -n $container --account-name $storageAccount
       terraform init --backend-config=${{ parameters.backendConfigFile }} ${{ parameters.initExtraArgs }}
-      terraform plan --input=false --var-file=${{ parameters.variablesFile }} ${{ parameters.extraArgs }} --out ${{ parameters.terraformRoot }}/plan.out
+      terraform plan --input=false --var-file=${{ parameters.variablesFile }} ${{ parameters.extraArgs }} --out ${{ parameters.terraformRoot }}/tfplan
     pwsh: true
   env:
     ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
