@@ -7,6 +7,7 @@ parameters:
   gitVersionConfig: 
   helmChartPath:
   helmRepo:
+  helmVersion: $(GitVersion.FullSemVer)
 steps:
 - template: utility/gitversion.yaml
   parameters:
@@ -20,6 +21,6 @@ steps:
     additionalArgs: ${{ parameters.dockerAdditionalArgs }}
 - template: build/helm.yaml
   parameters:
-    version: $(GitVersion.FullSemVer)
+    version: ${{ parameters.helmVersion }}
     chartPath: ${{ parameters.helmChartPath }}
     helmRepo: ${{ parameters.helmRepo }}
