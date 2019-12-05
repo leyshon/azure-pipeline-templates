@@ -27,11 +27,11 @@ steps:
       dotnet-gitversion /output buildserver /nofetch
     pwsh: true
 - task: PowerShell@2
-  displayName: 'Replace +'
+  displayName: 'Set build to valid docker tag'
   inputs:
     TargetType: 'inline'
     Script: |
-      $buildNumber = $($env:BUILD_BUILDNUMBER).replace('+','-')
+      $buildNumber = $($env:BUILD_BUILDNUMBER).replace('+','-').ToLower()
       Write-Output $buildNumber
       Write-Output "##vso[build.updatebuildnumber]$buildNumber"
     pwsh: true
