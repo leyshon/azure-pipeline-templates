@@ -12,7 +12,7 @@ steps:
     Script: |
       Set-PSDebug -Trace 1
       $tag = "${{ parameters.tag }}"
-      $newTag = $tag.Replace('+','-')
+      $newTag = $tag.Replace('+','-').ToLower()
       docker login ${{ parameters.containerRegistry }} -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET)
       docker build -f ${{ parameters.dockerfile }} -t ${{parameters.containerRegistry}}/$newTag ${{ parameters.context }} ${{ parameters.additionalArgs }}
       docker push ${{parameters.containerRegistry}}/$newTag
