@@ -37,5 +37,6 @@ steps:
                       --tiller-namespace ${{ parameters.namespace }} `
                       --namespace ${{ parameters.namespace }} `
                       --wait `
+                      --atomic `
                       ${{ parameters.setArgs }}
     pwsh: true
