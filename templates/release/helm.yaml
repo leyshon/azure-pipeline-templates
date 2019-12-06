@@ -15,6 +15,7 @@ steps:
       Set-PSDebug -Trace 1
       $version = "${{ parameters.version }}"
       $version = $version.Replace('+','-')
+      $releaseName = "${{ parameters.helmReleaseName }}".ToLower()
       
       curl https://raw.githubusercontent.com/helm/helm/master/scripts/get > get_helm.sh
       chmod 700 get_helm.sh
@@ -30,7 +31,7 @@ steps:
       helm repo update
 
       # Install if missing else upgrade
-      helm upgrade ${{ parameters.helmReleaseName }} ${{ parameters.helmChartRepo }}/${{ parameters.chartName }} `
+      helm upgrade $releaseName ${{ parameters.helmChartRepo }}/${{ parameters.chartName }} `
                       --version $version `
                       --install `
                       --tiller-namespace ${{ parameters.namespace }} `
