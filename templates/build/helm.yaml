@@ -18,4 +18,5 @@ steps:
       az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant f4f3e0ab-4028-411c-bc8a-79b8a4fbe674
       az acr helm repo add -n ${{ parameters.helmRepo}}
       az acr helm push -n ${{ parameters.helmRepo}} "$chartName-$version.tgz" --force
+      cp "$chartName-$version.tgz" ${{ parameters.chartPath }}/
     pwsh: true
