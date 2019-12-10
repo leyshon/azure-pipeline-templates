@@ -24,6 +24,7 @@ steps:
 
       # Get the credentials for the aks cluster
       az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant f4f3e0ab-4028-411c-bc8a-79b8a4fbe674
+      az account set --subscription $(ARM_SUBSCRIPTION_ID)
       az aks get-credentials -g "${{ parameters.k8sCluster }}-RG" -n ${{ parameters.k8sCluster }} --admin
 
       # Make sure we have our helm repo set up
