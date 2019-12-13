@@ -15,7 +15,7 @@ steps:
     Script: |
       Set-PSDebug -Trace 1
       if (-not [string]::IsNullOrEmpty("${{ parameters.plan }}")) {
-        az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant f4f3e0ab-4028-411c-bc8a-79b8a4fbe674
+        az login --service-principal -u $(ARM_CLIENT_ID) -p $env:ARM_CLIENT_SECRET --tenant f4f3e0ab-4028-411c-bc8a-79b8a4fbe674
         az account set --subscription $(ARM_SUBSCRIPTION_ID)
         Set-Location ${{ parameters.terraformRoot }}
         terraform apply ${{ parameters.plan }}
@@ -25,7 +25,7 @@ steps:
         $storageAccount = [regex]::matches($(Get-Content ${{ parameters.backendConfigFile }}), '(?<=storage_account_name = ")(((?!").)*)').captures.groups[0].value
         $storageRg= [regex]::matches($(Get-Content ${{ parameters.backendConfigFile }}), '(?<=resource_group_name = ")(((?!").)*)').captures.groups[0].value
         $container= [regex]::matches($(Get-Content ${{ parameters.backendConfigFile }}), '(?<=container_name = ")(((?!").)*)').captures.groups[0].value
-        az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant f4f3e0ab-4028-411c-bc8a-79b8a4fbe674
+        az login --service-principal -u $(ARM_CLIENT_ID) -p $env:ARM_CLIENT_SECRET --tenant f4f3e0ab-4028-411c-bc8a-79b8a4fbe674
         az account set --subscription $(ARM_SUBSCRIPTION_ID)
         az group create -l ${{ parameters.location }} -n $storageRg --tags do_not_delete
         az storage account create -n $storageAccount -g $storageRg -l ${{ parameters.location }} --sku Standard_RAGRS
