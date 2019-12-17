@@ -17,11 +17,10 @@ steps:
       $version = $version.Replace('+','-')
       $releaseName = "${{ parameters.helmReleaseName }}".ToLower()
       
-      curl https://raw.githubusercontent.com/helm/helm/master/scripts/get > get_helm.sh
+      curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 > get_helm.sh
       chmod 700 get_helm.sh
-      ./get_helm.sh -v v2.13.1
-      helm init --client-only
-
+      ./get_helm.sh -v v3.0.1
+    
       # Get the credentials for the aks cluster
       az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant f4f3e0ab-4028-411c-bc8a-79b8a4fbe674
       az account set --subscription $(ARM_SUBSCRIPTION_ID)
@@ -35,7 +34,6 @@ steps:
       helm upgrade $releaseName ${{ parameters.helmChartRepo }}/${{ parameters.chartName }} `
                       --version $version `
                       --install `
-                      --tiller-namespace ${{ parameters.namespace }} `
                       --namespace ${{ parameters.namespace }} `
                       --wait `
                       --atomic `
