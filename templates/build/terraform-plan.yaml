@@ -9,7 +9,7 @@ parameters:
 steps:  
 - task: PowerShell@2
   name: Terraform
-  displayName: Terraform
+  displayName: Terraform Plan
   inputs:
     TargetType: 'inline'
     Script: |
